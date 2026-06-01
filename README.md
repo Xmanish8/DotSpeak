@@ -16,7 +16,18 @@
 </div>
 
 ---
+ 
+<p align="center">
+  <a href="https://youtu.be/GdrlQnaMx3Y">
+    <img src="https://img.youtube.com/vi/GdrlQnaMx3Y/maxresdefault.jpg" width="800">
+  </a>
+</p>
 
+<p align="center">
+  🎥 Click the image above to watch the demo
+</p>
+
+---
 ## 🚀 Project Overview
 
 DotSpeak is an AI-powered Braille recognition system that uses a camera or uploaded image to classify Braille characters and convert them into readable text and speech.
