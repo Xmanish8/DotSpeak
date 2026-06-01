@@ -1,0 +1,87 @@
+# Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+
+venv/
+env/
+.venv/
+
+# Jupyter
+
+.ipynb_checkpoints/
+
+# VS Code
+
+.vscode/
+
+# OS Files
+
+.DS_Store
+Thumbs.db
+
+# Logs
+
+*.log
+
+# Build Files
+
+build/
+dist/
+*.egg-info/
+
+# Python Cache
+
+.pytest_cache/
+.mypy_cache/
+
+# Training Artifacts
+
+runs/
+
+# Temporary Images
+
+processed.jpg
+temp_cell.jpg
+cc.jpg
+tt.jpg
+Test.png
+
+# Backup Files
+
+backup_old/
+
+# Large Videos
+
+*.mp4
+*.avi
+*.mov
+
+# Environment Variables
+
+.env
+
+# Model Checkpoints (keep best.pt tracked)
+
+last.pt
+
+# Torch Cache
+
+.cache/
+
+# Ignore datasets if too large
+
+# braille_dataset/
+
+# Keep trained model
+
+!best.pt
+
+# Keep important docs
+
+!README.md
+!requirements.txt
+!BrailleVision_AI.py

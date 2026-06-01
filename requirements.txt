@@ -1,0 +1,13 @@
+ultralytics>=8.3.0
+torch
+torchvision
+opencv-python
+numpy
+Pillow
+pyttsx3
+matplotlib
+scipy
+pandas
+tqdm
+PyYAML
+requests
