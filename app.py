@@ -1,14 +1,13 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 from ultralytics import YOLO
-import av
-import cv2
+from PIL import Image
 from pathlib import Path
+import tempfile
 
-st.set_page_config(page_title="BrailleVision AI Realtime", layout="wide")
+st.set_page_config(page_title="BrailleVision AI", layout="centered")
 
-st.title("BrailleVision AI - Realtime Web Camera")
-st.write("Place one Braille character/cell inside the green box.")
+st.title("BrailleVision AI")
+st.write("Upload image or use webcam to capture one cropped Braille character.")
 
 MODEL_PATH = Path("best.pt")
 
@@ -18,68 +17,51 @@ def load_model():
 
 model = load_model()
 
-
-class BrailleProcessor(VideoProcessorBase):
-    def recv(self, frame):
-        img = frame.to_ndarray(format="bgr24")
-
-        h, w = img.shape[:2]
-
-        box_size = 220
-        x1 = w // 2 - box_size // 2
-        y1 = h // 2 - box_size // 2
-        x2 = w // 2 + box_size // 2
-        y2 = h // 2 + box_size // 2
-
-        crop = img[y1:y2, x1:x2]
-
-        try:
-            results = model.predict(
-                source=crop,
-                imgsz=64,
-                verbose=False
-            )
-
-            probs = results[0].probs
-            label = model.names[probs.top1]
-            conf = probs.top1conf.item()
-
-            text = f"{label} {conf:.2f}"
-
-        except Exception:
-            text = "Detecting..."
-
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-
-        cv2.putText(
-            img,
-            text,
-            (x1, y1 - 10),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            1,
-            (0, 255, 0),
-            2
-        )
-
-        cv2.putText(
-            img,
-            "Place ONE Braille cell inside box",
-            (30, 40),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.8,
-            (255, 255, 255),
-            2
-        )
-
-        return av.VideoFrame.from_ndarray(img, format="bgr24")
-
-
-webrtc_streamer(
-    key="braille-realtime",
-    video_processor_factory=BrailleProcessor,
-    media_stream_constraints={
-        "video": True,
-        "audio": False
-    },
-    async_processing=True,
+option = st.radio(
+    "Choose input method",
+    ["Upload Image", "Use Webcam"]
 )
+
+file = None
+
+if option == "Upload Image":
+    file = st.file_uploader(
+        "Upload Braille character image",
+        type=["jpg", "jpeg", "png"]
+    )
+
+if option == "Use Webcam":
+    file = st.camera_input("Take a Braille character photo")
+
+if file is not None:
+    image = Image.open(file).convert("RGB")
+    st.image(image, caption="Input Image", use_container_width=True)
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+        image.save(tmp.name)
+        temp_path = tmp.name
+
+    results = model.predict(
+        source=temp_path,
+        imgsz=64,
+        verbose=False
+    )
+
+    probs = results[0].probs
+    label = model.names[probs.top1]
+    conf = probs.top1conf.item()
+
+    st.success(f"Predicted Letter: {label}")
+    st.info(f"Confidence: {conf:.3f}")
+
+    st.markdown(
+        f"""
+        <script>
+        const msg = new SpeechSynthesisUtterance("Predicted letter is {label}");
+        window.speechSynthesis.speak(msg);
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.warning("Please upload an image or capture from webcam.")
