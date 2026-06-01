@@ -1,87 +1,109 @@
+# =========================
 # Python
-
-**pycache**/
+# =========================
+__pycache__/
 *.py[cod]
 *$py.class
 
+# =========================
 # Virtual Environments
-
+# =========================
 venv/
 env/
 .venv/
 
+# =========================
 # Jupyter
-
+# =========================
 .ipynb_checkpoints/
 
+# =========================
 # VS Code
-
+# =========================
 .vscode/
 
-# OS Files
+# =========================
+# Dev Container
+# =========================
+.devcontainer/
 
+# =========================
+# OS Files
+# =========================
 .DS_Store
 Thumbs.db
 
+# =========================
 # Logs
-
+# =========================
 *.log
 
+# =========================
 # Build Files
-
+# =========================
 build/
 dist/
 *.egg-info/
 
+# =========================
 # Python Cache
-
+# =========================
 .pytest_cache/
 .mypy_cache/
+.cache/
 
+# =========================
 # Training Artifacts
-
+# =========================
 runs/
 
+# =========================
 # Temporary Images
-
+# =========================
 processed.jpg
 temp_cell.jpg
 cc.jpg
 tt.jpg
 Test.png
 
-# Backup Files
-
+# =========================
+# Backup Files/Folders
+# =========================
+backup/
 backup_old/
 
+# =========================
 # Large Videos
-
+# =========================
 *.mp4
 *.avi
 *.mov
 
+# =========================
 # Environment Variables
-
+# =========================
 .env
 
-# Model Checkpoints (keep best.pt tracked)
-
+# =========================
+# Model Checkpoints
+# =========================
 last.pt
 
-# Torch Cache
+# =========================
+# Datasets
+# =========================
+braille_dataset/
+Braille Alphabet Image Dataset(A-Z)/
 
-.cache/
+# =========================
+# Git Internal Files
+# =========================
+.git/
 
-# Ignore datasets if too large
-
-# braille_dataset/
-
-# Keep trained model
-
+# =========================
+# Keep Important Files
+# =========================
 !best.pt
-
-# Keep important docs
-
 !README.md
 !requirements.txt
 !BrailleVision_AI.py
