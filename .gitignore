@@ -94,6 +94,7 @@ last.pt
 # =========================
 braille_dataset/
 Braille Alphabet Image Dataset(A-Z)/
+split_dataset/
 
 # =========================
 # Git Internal Files
